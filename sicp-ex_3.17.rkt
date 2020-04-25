@@ -1,10 +1,5 @@
 #lang sicp
 
-(define (contains x L)
-  (cond ((null? L) #f)
-        ((eq? (car L) x) #t)
-        (else (contains x (cdr L)))))
-
 (define (count-pairs x)
   (let ((encountered '()))
     (define (helper x)
