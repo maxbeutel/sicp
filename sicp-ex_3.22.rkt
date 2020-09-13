@@ -4,11 +4,11 @@
 
 (define (print-list L)
   (cond ((null? L)
-         (display "------\n"))
+         (display "\n------\n"))
         (else
          (begin
            (display (car L))
-           (display "\n")
+           (display " ")
            (print-list (cdr L))))))
 
 (define (make-queue)
@@ -16,7 +16,7 @@
         (rear-ptr '()))
     (define (insert item)
       (let ((new-pair (cons item '())))
-        (cond ((null? front-ptr)
+        (cond ((empty?)
                (begin
                  (set! front-ptr new-pair)
                  (set! rear-ptr new-pair)))
@@ -24,6 +24,8 @@
                (begin
                  (set-cdr! rear-ptr new-pair)
                  (set! rear-ptr new-pair))))))
+    (define (empty?)
+      (null? front-ptr))
     (define (delete)
       (set! front-ptr (cdr front-ptr)))
     (define (print)
@@ -32,10 +34,12 @@
       (cond ((eq? m 'insert) insert)
             ((eq? m 'delete) delete)
             ((eq? m 'print) print)
+            ((eq? m 'empty?) empty?)            
             (else (error "Unknown request" m))))
     dispatch))
 
 (define q (make-queue))
+((q 'empty?))
 ((q 'print))
 
 ((q 'insert) 'a)
@@ -45,6 +49,12 @@
 ((q 'print))
 
 ((q 'delete))
+((q 'print))
+
+((q 'insert) 'c)
+((q 'print))
+
+((q 'insert) 'd)
 ((q 'print))
 
 ((q 'delete))
